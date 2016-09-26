@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src -d dist",
     "watch": "babel --watch src -d dist",
-    "test": "babel-tape-runner spec/*.spec.js | tap-spec"
+    "test": "babel-tape-runner spec/*.spec.js | tap-spec",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",

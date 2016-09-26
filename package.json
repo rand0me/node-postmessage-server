@@ -1,6 +1,6 @@
 {
   "name": "node-postmessage-server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A server implementation for postMessage communication",
   "main": "dist/index.js",
   "scripts": {

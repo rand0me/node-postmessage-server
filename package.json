@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "A server implementation for postMessage communication",
   "main": "dist/index.js",
+  "jsnext:main": "src/index.js",
   "scripts": {
     "build": "babel src -d dist",
     "watch": "babel --watch src -d dist",

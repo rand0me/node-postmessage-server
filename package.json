@@ -1,5 +1,5 @@
 {
-  "name": "node-postmessage-server",
+  "name": "postmessage-server",
   "version": "0.1.1",
   "description": "A server implementation for postMessage communication",
   "main": "dist/index.js",

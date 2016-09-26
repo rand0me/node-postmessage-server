@@ -3,3 +3,6 @@ spec
 
 # No examples in npm package
 examples
+
+# No webstorm files
+.idea

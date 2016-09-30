@@ -43,7 +43,7 @@ export default class Server {
      */
     listen(window) {
         this.setWindow(window);
-        this.window.addEventListener('message', (e) => this.handle(e), false);
+        this.window.addEventListener('message', this.handle.bind(this), false);
     }
 
     /**

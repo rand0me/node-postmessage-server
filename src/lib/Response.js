@@ -42,16 +42,17 @@ export default class Response {
      */
     send(data) {
         if (data) {
-            this.dest.postMessage(JSON.stringify(data));
+            this.data = extend(this.data, data);
+            this.dest.postMessage(JSON.stringify(this.data), '*');
             return this;
         }
 
         if (this.data) {
-            this.dest.postMessage(JSON.stringify(this.data));
+            this.dest.postMessage(JSON.stringify(this.data), '*');
             return this;
         }
 
-        this.dest.postMessage(JSON.stringify(this));
+        this.dest.postMessage(JSON.stringify(this), '*');
         return this;
     }
 }
@@ -64,12 +65,25 @@ export default class Response {
  */
 Response.fromRequest = (req, data) => {
     const res = new Response();
+    const _data = { path: res.path, type: 'RESPONSE' };
     res.setDestination(req.source);
 
     if (data) {
-        res.setId(req.id)
-            .setData(data);
+        res
+            .setId(req.id)
+            .setData(extend(_data, data));
     }
 
     return res;
 };
+
+function extend(_o1, _o2) {
+    let o1 = _o1 || {}
+      , keys = Object.keys(_o2)
+      , key
+      ;
+
+    while (key = keys.pop()) o1[key] = _o2[key];
+
+    return o1;
+}

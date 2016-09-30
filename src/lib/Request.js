@@ -45,7 +45,13 @@ export default class Request {
  */
 Request.fromMessageEvent = (event) => {
     const req = new Request();
-    const data = JSON.parse(event.data);
+    let data;
+
+    try {
+        data = JSON.parse(event.data);
+    } catch (e) {
+        data = {};
+    }
 
     return req.setId(data.id)
         .setSource(event.source)

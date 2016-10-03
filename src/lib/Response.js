@@ -2,7 +2,7 @@ export default class Response {
 
     /**
      * @param id {string} Response Id
-     * @returns {Request}
+     * @returns {Response}
      */
     setId(id) {
         this.id = id;
@@ -11,7 +11,7 @@ export default class Response {
 
     /**
      * @param source {object} Response source
-     * @returns {Request}
+     * @returns {Response}
      */
     setSource(source) {
         this.source = source;
@@ -19,8 +19,8 @@ export default class Response {
     }
 
     /**
-     * @param dest {{postMessage} Response destination
-     * @returns {Request}
+     * @param dest {{postMessage}} Response destination
+     * @returns {Response}
      */
     setDestination(dest) {
         this.dest = dest;
@@ -29,7 +29,7 @@ export default class Response {
 
     /**
      * @param data {object} Response data
-     * @returns {Request}
+     * @returns {Response}
      */
     setData(data) {
         this.data = data;
@@ -39,40 +39,30 @@ export default class Response {
     /**
      * send Response
      * @param [data] {object} Data to send
+     * @returns {Response}
      */
     send(data) {
-        if (data) {
-            this.data = extend(this.data, data);
-            this.dest.postMessage(JSON.stringify(this.data), '*');
-            return this;
-        }
+        this.data = extend(this.data, data);
+        this.dest.postMessage(JSON.stringify(this.data), '*');
 
-        if (this.data) {
-            this.dest.postMessage(JSON.stringify(this.data), '*');
-            return this;
-        }
-
-        this.dest.postMessage(JSON.stringify(this), '*');
         return this;
     }
 }
 
 /**
  * Response factory method
- * @param req {Request} onMessage Event object
- * @param [data] {object} Optional Response data
+ * @param _req {Request} onMessage Event object
+ * @param [_data] {object} Optional Response data
  * @returns {Response}
  */
-Response.fromRequest = (req, data) => {
+Response.fromRequest = (_req, _data) => {
     const res = new Response();
-    const _data = { path: res.path, type: 'RESPONSE' };
-    res.setDestination(req.source);
+    const data = { path: res.path, type: 'RESPONSE' };
 
-    if (data) {
-        res
-            .setId(req.id)
-            .setData(extend(_data, data));
-    }
+    res
+        .setDestination(_req.source)
+        .setId(_req.id)
+        .setData(extend(data, _data));
 
     return res;
 };

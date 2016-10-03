@@ -56,12 +56,17 @@ export default class Response {
  * @returns {Response}
  */
 Response.fromRequest = (_req, _data) => {
+    if (!_req) {
+        return null;
+    }
+
     const res = new Response();
+    const req = _req;
     const data = { path: res.path, type: 'RESPONSE' };
 
     res
-        .setDestination(_req.source)
-        .setId(_req.id)
+        .setDestination(req.source)
+        .setId(req.id)
         .setData(extend(data, _data));
 
     return res;
@@ -69,7 +74,7 @@ Response.fromRequest = (_req, _data) => {
 
 function extend(_o1, _o2) {
     let o1 = _o1 || {}
-      , keys = Object.keys(_o2)
+      , keys = Object.keys(_o2 || {})
       , key
       ;
 

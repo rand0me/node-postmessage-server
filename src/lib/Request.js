@@ -53,6 +53,10 @@ Request.fromMessageEvent = (event) => {
         data = {};
     }
 
+    if (data.type === 'RESPONSE') {
+        return null;
+    }
+
     return req.setId(data.id)
         .setSource(event.source)
         .setPath(data.path)

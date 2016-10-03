@@ -5,6 +5,7 @@ import WindowMock from './window.mock';
 
 const TEST_DATA = {
     message: "OK"
+  , type: 'RESPONSE'
 };
 
 const TEST_ROUTES = [
@@ -14,12 +15,13 @@ const TEST_ROUTES = [
 
 tape('api', (t) => {
     const hostWindow = new WindowMock();
-    const targetWindow = new WindowMock();
+    const targetWindow = hostWindow;
 
     t.plan(3);
 
     targetWindow.addEventListener("message", (e) => {
         const data = JSON.parse(e.data);
+        if (data.type !== 'RESPONSE') return;
         if (data.error) {
             t.pass(data.error.message);
         } else {
@@ -31,6 +33,6 @@ tape('api', (t) => {
     pmServer.listen(hostWindow);
 
     hostWindow.postMessage(JSON.stringify({path: "test/route"}), targetWindow, false);
-    hostWindow.postMessage(JSON.stringify({path: "test/not-found"}), targetWindow, false);
+    hostWindow.postMessage(JSON.stringify({path: "test/non-existent-route"}), targetWindow, false);
     hostWindow.postMessage(JSON.stringify({path: "test/script-error"}), targetWindow, false);
 });

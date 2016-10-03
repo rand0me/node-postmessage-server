@@ -56,7 +56,8 @@ export default class Server {
         const res = Response.fromRequest(req);
 
         try {
-            this.router.process(req, res);
+            if (req && res)
+                this.router.process(req, res);
         } catch (error) {
             res.send({ error: { message: error.toString() } });
         }

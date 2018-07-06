@@ -1,5 +1,8 @@
 postmessage-server ![travis-image]
 =================================
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/rand0me/node-postmessage-server.svg)](https://greenkeeper.io/)
+
 ![npm-image]
 
 ## Installation
